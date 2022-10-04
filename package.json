@@ -1,0 +1,24 @@
+{
+  "name": "rpgassist",
+  "version": "1.0.0",
+  "description": "A tool to facilitate/log tabletop rpg campaigns.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jack4221Wilson/RPGassist.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jack4221Wilson/RPGassist/issues"
+  },
+  "homepage": "https://github.com/Jack4221Wilson/RPGassist#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "path": "^0.12.7"
+  }
+}

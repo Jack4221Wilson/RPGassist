@@ -1,4 +1,4 @@
-window.pc.yog = {
+{
   characterName: 'Yog',
   classes: 'Ancestral Barbarian',
   background: 'Nomad',
