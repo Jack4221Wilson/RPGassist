@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Jack4221Wilson/RPGassist#readme",
   "dependencies": {
+    "eslint": "^8.24.0",
     "express": "^4.18.1",
     "path": "^0.12.7"
   }

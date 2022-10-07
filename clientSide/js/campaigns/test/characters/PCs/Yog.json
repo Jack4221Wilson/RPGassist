@@ -55,7 +55,7 @@
     "investigation": { "proficiency": false, "mod": "int" },
     "medicine": { "proficiency": false, "mod": "wis" },
     "nature": { "proficiency": true, "mod": "int" },
-    "percetpion": { "proficiency": false, "mod": "wis" },
+    "perception": { "proficiency": false, "mod": "wis" },
     "performance": { "proficiency": false, "mod": "cha" },
     "persuasion": { "proficiency": false, "mod": "cha" },
     "religion": { "proficiency": false, "mod": "int" },

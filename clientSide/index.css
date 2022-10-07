@@ -1,0 +1,132 @@
+:root{
+    --sansSerif: 'Verdana', sans-serif;
+    --serif: 'didot', serif;
+    --black: #1C2826;
+    --green: #CEEA9A;
+    --darkGreen: #3E4832;
+    --white: #EEF4D4;
+    --peach: #EA9E8D;
+    --darkPeach: #614942;
+    --red: #D64550;
+}
+body {
+    background-color: var(--black);
+    color: var(--white);
+    font-family: var(--sansSerif);
+    font-size: 14pt;
+}
+p {
+    display: inline;
+    margin: 0;
+    margin-block: auto;
+}
+h1 {
+    color: var(--peach);
+    font-family: var(--serif);
+    display: inline-block;
+    margin: 0;
+    margin-block: auto;
+}
+input[type='text'] {
+    background-color: var(--darkGreen);
+    color: var(--white);
+    font-family: var(--sansSerif);
+    font-size: 14pt;
+    border: 0;
+    border-radius: 2pt;
+    height: clamp(16pt,calc(100% - 6pt), 2pc)
+}
+input[type='text']:hover {
+    background-color: var(--darkPeach);
+}
+input[type='text']:focus {
+    background-color: var(--green);
+    color: var(--darkGreen);
+}
+input[type='checkbox']{
+    align-self: center;
+}
+*:focus{
+    outline: 0;
+}
+div.sheet{
+    width: 800px;
+    height: 80vh;
+    overflow-y: scroll;
+    padding: 1pc;
+    border-radius: 6pt;
+    margin: 0;
+    margin-top: 2pc;
+    margin-inline: 10px;
+    box-shadow:
+        0 0 10px 5px var(--darkPeach),
+        inset 0 0 3px 3px var(--darkPeach)
+}
+.hp,
+.deathSaves,
+.stats, 
+.skills {
+    margin-block: 1pc;
+    border-radius: 6pt;
+    padding: 1pc;
+    box-shadow:
+        0 0 10px 5px var(--darkGreen),
+        inset 0 0 3px 3px var(--darkGreen)
+}
+.hp div,
+.deathSaves div,
+.stats div, 
+.skills div {
+    display: flex;
+    flex-flow: row nowrap;
+}
+.hp > div,
+.deathSaves > div,
+.stats > div,
+.skills > div {
+    display: flex;
+    flex-flow: row wrap;
+}
+.str h1,
+.dex h1,
+.con h1,
+.int h1,
+.wis h1,
+.cha h1,
+.acrobatics h1,
+.animalHandling h1,
+.arcana h1,
+.athletics h1,
+.deceptions h1,
+.history h1,
+.insight h1,
+.intimidation h1,
+.investigation h1,
+.medicine h1,
+.nature h1,
+.perception h1,
+.performance h1,
+.persuasion h1,
+.religion h1,
+.slightOfHand h1,
+.stealth h1,
+.survival h1 {
+    color: var(--red);
+    font-family: var(--serif);
+    font-size: 21pt;
+    padding-left: 1pc;
+}
+.max h1,
+.temp h1,
+.damage h1,
+.pass h1,
+.fail h1,
+.base h1,
+.save h1,
+.proficiency h1,
+.mod h1 {
+    color: var(--green);
+    font-family: var(--sansSerif);
+    font-size: 16pt;
+    padding-left: 6pt;
+}
