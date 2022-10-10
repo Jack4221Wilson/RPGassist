@@ -79,7 +79,8 @@ div.sheet{
 .hp,
 .deathSaves,
 .stats, 
-.skills {
+.skills,
+.currency {
     margin-block: 1pc;
     border-radius: 6pt;
     padding: 1pc;
@@ -90,14 +91,16 @@ div.sheet{
 .hp div,
 .deathSaves div,
 .stats div, 
-.skills div {
+.skills div,
+.currency div {
     display: flex;
     flex-flow: row nowrap;
 }
 .hp > div,
 .deathSaves > div,
 .stats > div,
-.skills > div {
+.skills > div,
+.currency > div {
     display: flex;
     flex-flow: row wrap;
 }
@@ -138,7 +141,12 @@ div.sheet{
 .base h1,
 .save h1,
 .proficiency h1,
-.mod h1 {
+.mod h1,
+.platnium h1,
+.gold h1,
+.electrum h1,
+.silver h1,
+.copper h1 {
     color: var(--green);
     font-family: var(--sansSerif);
     font-size: 16pt;
