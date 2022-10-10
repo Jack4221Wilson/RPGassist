@@ -8,7 +8,7 @@ const path2site = path.join(__dirname, './clientSide')
 app.use(express.static(path2site))
 
 // 3126952310
-
+// Gets comuputer's IP for local network use
 const { networkInterfaces } = require('os');
 const nets = networkInterfaces();
 const results = {}
@@ -31,19 +31,14 @@ app.listen(
     console.log(`Dance floor is at http://${results.en0[0]}:${port}`)
   }
 )
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/clientSide/index.html'))
-  console.log('someone came to boogy at ' + new Date())
-})
-
+// Left over from learning
 app.get('/knock', (req, res) => {
   res.status(200).send({
     answer: true
   })
   console.log('there is a knock at the door')
 })
-
+// Sends the requested character JSON to the user
 app.get('/clientSide/js/campaigns/test/characters/PCs/:name', (req, res, next) => {
   var characterName = req.params.name
   res.status(200).sendFile(characterName, function (err) {

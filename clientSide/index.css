@@ -43,8 +43,22 @@ input[type='text']:focus {
     background-color: var(--green);
     color: var(--darkGreen);
 }
-input[type='checkbox']{
+input[type='button']{
+    color: var(--white);
     align-self: center;
+    height: 14pt; width: 14pt;
+    background-color: var(--white);
+    border: 0; outline: 0;
+    border-radius: 7px;
+}
+input[type='button'][value='true']{
+    background-color: var(--red);
+    color: var(--red);
+}
+input[type='button']:hover,
+input[type='button'][value='true']:hover {
+    background-color: var(--peach);
+    color: var(--peach);
 }
 *:focus{
     outline: 0;
