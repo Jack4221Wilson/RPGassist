@@ -1,7 +1,8 @@
-const path = require('path')
-const express = require('express')
-const app = express() // creates a server with the express library
-const port = 8001 // port for server
+const path = require('path'),
+express = require('express'),
+fs = require('fs'),
+app = express(), // creates a server with the express library
+port = 8001 // port for server
 
 // path to static 'front end' client-side files
 const path2site = path.join(__dirname, './clientSide')
@@ -25,12 +26,7 @@ for (const name of Object.keys(nets)) {
       }
   }
 }
-app.listen(
-  port,
-  () => {
-    console.log(`Dance floor is at http://${results.en0[0]}:${port}`)
-  }
-)
+
 // Left over from learning
 app.get('/knock', (req, res) => {
   res.status(200).send({
@@ -39,14 +35,32 @@ app.get('/knock', (req, res) => {
   console.log('there is a knock at the door')
 })
 // Sends the requested character JSON to the user
-app.get('/clientSide/js/campaigns/test/characters/PCs/:name', (req, res, next) => {
+app.get('/js/campaigns/test/characters/PCs/:name', (req, res, next) => {
   var characterName = req.params.name
-  res.status(200).sendFile(characterName, function (err) {
+  res.sendFile(characterName, (err) => {
     if (err) {
       next(err)
-    } else {
-      console.log('Sent:', characterName)
     }
-    console.log('Sent:', characterName)
   })
 })
+// Saves a modified character sheet
+app.use(express.json())
+app.post('/save/character/:name', (req, res, next) => {
+  var chrData = req.body
+  var path2chr = path2site + '/js/campaigns/test/characters/PCs' + `/${chrData.characterName}.json` 
+  fs.writeFile(
+    path2chr, JSON.stringify(chrData), (err) => {
+      if(err) {
+        next(err)
+      } else {
+        res.status(200).send('has been saved')
+        console.log(chrData.characterName + ' has been updated')
+      }
+    })
+})
+app.listen(
+  port,
+  () => {
+    console.log(`Dance floor is at http://${results.en0[0]}:${port}`)
+  }
+)

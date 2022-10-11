@@ -12,6 +12,23 @@ yogBtn.addEventListener('click', async () => {
   character = JSON.parse(yogJson)
   // Attaches character sheet to body
   document.body.appendChild(createSheet(character))
+
+  const saveBtn = document.createElement('input')
+  saveBtn.setAttribute('type', 'button')
+  saveBtn.setAttribute('value', 'Save')
+  saveBtn.className = 'option'
+  saveBtn.addEventListener('click', async () => {
+
+    const saveUrl = baseUrl + `/save/character/${character.characterName}`
+    fetch(saveUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(character)
+    })
+  })
+  document.body.appendChild(saveBtn)
 })
 // Creates a sheet element using Character obj
 function createSheet (chr) {

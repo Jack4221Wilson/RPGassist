@@ -152,3 +152,21 @@ div.sheet{
     font-size: 16pt;
     padding-left: 6pt;
 }
+input[type='button'].option {
+    height: 36px;
+    width: auto;
+    margin: 14px;
+    margin-left: 26px;
+    align-self: center;
+    font-size: 1pc;
+    font-weight: 600;
+    text-align: center;
+    color: var(--black);
+    background-color: var(--peach)
+}
+input[type='button'].option:hover {
+    background-color: var(--white)
+}
+input[type='button'].option:active {
+    background-color: var(--red)
+}
