@@ -47,14 +47,14 @@ app.get('/js/campaigns/test/characters/PCs/:name', (req, res, next) => {
 app.use(express.json())
 app.post('/save/character/:name', (req, res, next) => {
   var chrData = req.body
-  var path2chr = path2site + '/js/campaigns/test/characters/PCs' + `/${chrData.characterName}.json` 
+  var path2chr = path2site + '/js/campaigns/test/characters/PCs' + `/${chrData.Character_Name}.json` 
   fs.writeFile(
     path2chr, JSON.stringify(chrData), (err) => {
       if(err) {
         next(err)
       } else {
         res.status(200).send('has been saved')
-        console.log(chrData.characterName + ' has been updated')
+        console.log(chrData.Character_Name + ' has been updated')
       }
     })
 })

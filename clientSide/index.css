@@ -7,7 +7,7 @@
     --white: #EEF4D4;
     --peach: #EA9E8D;
     --darkPeach: #614942;
-    --red: #D64550;
+    --red: #EC5D69;
 }
 body {
     background-color: var(--black);
@@ -76,11 +76,11 @@ div.sheet{
         0 0 10px 5px var(--darkPeach),
         inset 0 0 3px 3px var(--darkPeach)
 }
-.hp,
-.deathSaves,
-.stats, 
-.skills,
-.currency {
+.Hit_Points,
+.Death_Saves,
+.Stats, 
+.Skills,
+.Currency {
     margin-block: 1pc;
     border-radius: 6pt;
     padding: 1pc;
@@ -88,65 +88,65 @@ div.sheet{
         0 0 10px 5px var(--darkGreen),
         inset 0 0 3px 3px var(--darkGreen)
 }
-.hp div,
-.deathSaves div,
-.stats div, 
-.skills div,
-.currency div {
+.Hit_Points div,
+.Death_Saves div,
+.Stats div, 
+.Skills div,
+.Currency div {
     display: flex;
     flex-flow: row nowrap;
 }
-.hp > div,
-.deathSaves > div,
-.stats > div,
-.skills > div,
-.currency > div {
+.Hit_Points > div,
+.Death_Saves > div,
+.Stats > div,
+.Skills > div,
+.Currency > div {
     display: flex;
     flex-flow: row wrap;
 }
-.str h1,
-.dex h1,
-.con h1,
-.int h1,
-.wis h1,
-.cha h1,
-.acrobatics h1,
-.animalHandling h1,
-.arcana h1,
-.athletics h1,
-.deceptions h1,
-.history h1,
-.insight h1,
-.intimidation h1,
-.investigation h1,
-.medicine h1,
-.nature h1,
-.perception h1,
-.performance h1,
-.persuasion h1,
-.religion h1,
-.slightOfHand h1,
-.stealth h1,
-.survival h1 {
+.STR h1,
+.DEX h1,
+.CON h1,
+.INT h1,
+.WIS h1,
+.CHA h1,
+.Acrobatics h1,
+.Animal_Handling h1,
+.Arcana h1,
+.Athletics h1,
+.Deceptions h1,
+.History h1,
+.Insight h1,
+.Intimidation h1,
+.Investigation h1,
+.Medicine h1,
+.Nature h1,
+.Perception h1,
+.Performance h1,
+.Persuasion h1,
+.Religion h1,
+.Slight_Of_Hand h1,
+.Stealth h1,
+.Survival h1 {
     color: var(--red);
     font-family: var(--serif);
     font-size: 21pt;
     padding-left: 1pc;
 }
-.max h1,
-.temp h1,
-.damage h1,
-.pass h1,
-.fail h1,
-.base h1,
-.save h1,
-.proficiency h1,
-.mod h1,
-.platnium h1,
-.gold h1,
-.electrum h1,
-.silver h1,
-.copper h1 {
+.Max h1,
+.Temp h1,
+.Damage h1,
+.Pass h1,
+.Fail h1,
+.Base h1,
+.Save h1,
+.Proficiency h1,
+.Mod h1,
+.Platnium h1,
+.Gold h1,
+.Electrum h1,
+.Silver h1,
+.Copper h1 {
     color: var(--green);
     font-family: var(--sansSerif);
     font-size: 16pt;

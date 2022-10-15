@@ -1,5 +1,4 @@
-const stat = 12
-
+// Calculates a modifier based on the stat value
 function modCalc (baseStat) {
   let mod = -6
   if (baseStat > 0) {
@@ -12,4 +11,3 @@ function modCalc (baseStat) {
   return mod
 }
 
-console.log(modCalc(stat))
