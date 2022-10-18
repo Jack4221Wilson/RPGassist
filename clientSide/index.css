@@ -1,12 +1,12 @@
 :root{
     --sansSerif: 'Verdana', sans-serif;
     --serif: 'didot', serif;
-    --black: #1C2826;
-    --green: #CEEA9A;
-    --darkGreen: #3E4832;
-    --white: #EEF4D4;
+    --black: #1c2826;
+    --green: #ceea9a;
+    --darkGreen: #5D852D;
+    --white: #eef4d4;
     --peach: #EA9E8D;
-    --darkPeach: #614942;
+    --darkPeach: #613C30;
     --red: #EC5D69;
 }
 body {
@@ -14,6 +14,10 @@ body {
     color: var(--white);
     font-family: var(--sansSerif);
     font-size: 14pt;
+}
+.light-mode {
+    background-color: var(--white);
+    color: var(--black);
 }
 p {
     display: inline;
@@ -36,12 +40,23 @@ input[type='text'] {
     border-radius: 2pt;
     height: clamp(16pt,calc(100% - 6pt), 2pc)
 }
+.light-mode input[type='text']{
+    background-color: var(--green);
+    color: var(--black);
+}
 input[type='text']:hover {
     background-color: var(--darkPeach);
+}
+.light-mode input[type='text']:hover {
+    background-color: var(--peach);
 }
 input[type='text']:focus {
     background-color: var(--green);
     color: var(--darkGreen);
+}
+.light-mode input[type='text']:focus {
+    background-color: var(--peach);
+    color: var(--black);
 }
 input[type='button']{
     color: var(--white);
@@ -50,6 +65,25 @@ input[type='button']{
     background-color: var(--white);
     border: 0; outline: 0;
     border-radius: 7px;
+}
+input[type='button']#lightswitch {
+    background-image: url('images/clipArt/darkBtn.png');
+    background-color: inherit;
+    background-size: 36px;
+    color: rgba(0, 0, 0, 0);
+    height: 36px;
+    width: 36px;
+    float: right;
+}
+input[type='button']#lightswitch:hover {
+    outline: 3px solid var(--peach); 
+}
+.light-mode input[type='button']#lightswitch {
+    background-image: url('images/clipArt/lightBtn.png');
+}
+.light-mode input[type='button'] {
+    background-color: var(--green);
+    color: var(--green);
 }
 input[type='button'][value='true']{
     background-color: var(--red);
@@ -73,8 +107,11 @@ div.sheet{
     margin-top: 2pc;
     margin-inline: 10px;
     box-shadow:
-        0 0 10px 5px var(--darkPeach),
-        inset 0 0 3px 3px var(--darkPeach)
+        0 0 10px 5px var(--darkPeach);
+}
+.light-mode div.sheet{
+    box-shadow:
+        0 0 10px 5px var(--red);
 }
 .Hit_Points,
 .Death_Saves,
@@ -85,8 +122,15 @@ div.sheet{
     border-radius: 6pt;
     padding: 1pc;
     box-shadow:
-        0 0 10px 5px var(--darkGreen),
-        inset 0 0 3px 3px var(--darkGreen)
+        0 0 10px 5px var(--darkGreen);
+}
+.light-mode :is(.Hit_Points,
+.Death_Saves,
+.Stats, 
+.Skills,
+.Currency) {
+    box-shadow:
+        0 0 10px 5px var(--green);
 }
 .Hit_Points div,
 .Death_Saves div,
@@ -150,7 +194,24 @@ div.sheet{
     color: var(--green);
     font-family: var(--sansSerif);
     font-size: 16pt;
+    font-weight: 300;
     padding-left: 6pt;
+}
+.light-mode :is(.Max h1,
+.Temp h1,
+.Damage h1,
+.Pass h1,
+.Fail h1,
+.Base h1,
+.Save h1,
+.Proficiency h1,
+.Mod h1,
+.Platnium h1,
+.Gold h1,
+.Electrum h1,
+.Silver h1,
+.Copper h1) {
+    color: var(--darkGreen);
 }
 input[type='button'].option {
     height: 36px;
