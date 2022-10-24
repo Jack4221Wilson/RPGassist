@@ -73,6 +73,44 @@ function createSheet (chr) {
     skillModBox.querySelector('input').replaceWith(skillMod)
   })
 
+  const abilities = characterSheet.querySelector('div.Abilities')
+  const addAbility = document.createElement('input')
+  addAbility.setAttribute('type', 'button')
+  addAbility.setAttribute('value', 'New Ability')
+  addAbility.className = 'option'
+  addAbility.addEventListener('click', async () => {
+    const response = await fetch('/forms/addingAbility', {
+      method: 'GET',
+    })
+    const form = await response.text()
+    const formDiv = document.createElement('div')
+    formDiv.innerHTML = form
+    formDiv.className = 'form'
+    if (abilities.querySelector('div.form') == null){
+      abilities.appendChild(formDiv)
+      addAbility.remove()
+    }
+    const addButton = formDiv.querySelector('button.add')
+    addButton.addEventListener('click', () => {
+      const newName = abilities.querySelector('input#abilityName').value
+      const description = abilities.querySelector('textarea#description').value
+      const refLink = abilities.querySelector('input#refLink').value
+      const abilityData = {
+          "description": description,
+          "refLink": refLink
+        }
+      character['Abilities'][newName] = abilityData
+      const newAbility = createAbilityEle(newName)
+      formDiv.replaceWith(newAbility)
+      abilities.appendChild(addAbility)
+    })
+    const cancelBtn = formDiv.querySelector('button.cancel')
+    cancelBtn.addEventListener('click', () => {
+      formDiv.replaceWith(addAbility)
+    })
+  })
+  abilities.appendChild(addAbility)
+
   return characterSheet
 }
 // Creates the sections of the sheet and puts in a header
@@ -92,6 +130,10 @@ function boxer (obj) {
     // is also an object
     if (typeof thingsValue !== 'object') {
       thingsBox.appendChild(inputMaker(thingsValue))
+    } else if (thing == "Abilities"){
+      Object.keys(character.Abilities).forEach((ability) => {
+        thingsBox.appendChild(createAbilityEle(ability))
+      }) 
     } else {
       thingsBox.appendChild(boxer(thingsValue))
     }
@@ -242,4 +284,74 @@ function findParents (orphan) {
   let branchString = ''.concat(...branches)
   branchString = branchString.slice(1)
   return branchString
+}
+function createAbilityEle(abilityName) {
+  const abilityEle = document.createElement('div')
+  abilityEle.className = 'abilityBox'
+  const ability = character['Abilities'][abilityName]
+  const description = ability.description
+  const refLink = ability.refLink
+  abilityEle.innerHTML = `
+  <div>
+    <p><b>${abilityName}: </b>${description}</p>
+  </div>
+  `
+  if (refLink != '') {
+    const refBtn = document.createElement('button')
+    refBtn.innerHTML = 'Reference Page'
+    refBtn.className = 'refbtn'
+    refBtn.addEventListener('click', () => {
+      window.open(refLink, '_blank')
+    })
+    abilityEle.appendChild(refBtn)
+  }
+
+  const editBtn = document.createElement('button')
+  editBtn.innerHTML = 'Edit'
+  editBtn.className = 'editBtn'
+  editBtn.addEventListener('click', async () => {
+    const response = await fetch('/forms/addingAbility', {
+      method: 'GET',
+    })
+    const form = await response.text()
+    const formDiv = document.createElement('div')
+    formDiv.innerHTML = form
+    formDiv.className = 'form'
+    const nameInput = formDiv.querySelector('input#abilityName')
+    nameInput.setAttribute('value', abilityName)
+    const descriptionInput = formDiv.querySelector('textarea#description')
+    descriptionInput.innerHTML = description
+    const refLinkInput = formDiv.querySelector('input#refLink')
+    refLinkInput.setAttribute('value', refLink)
+    const addButton = formDiv.querySelector('button.add')
+    addButton.innerHTML = 'Update Ability'
+    addButton.addEventListener('click', () => {
+      const abilityData = {
+        "description": descriptionInput.value,
+        "refLink": refLinkInput.value
+      }
+      character['Abilities'][nameInput.value] = abilityData
+      if (abilityName !== nameInput.value) {
+        delete character['Abilities'][abilityName]
+      }
+      const newAbility = createAbilityEle(nameInput.value)
+      formDiv.replaceWith(newAbility)
+    })
+    const cancelBtn = formDiv.querySelector('button.cancel')
+    cancelBtn.addEventListener('click', () => {
+      formDiv.replaceWith(abilityEle)
+    })
+    abilityEle.replaceWith(formDiv)
+  })
+  abilityEle.appendChild(editBtn)
+
+  const delBtn = document.createElement('button')
+  delBtn.innerHTML = 'Delete Ability'
+  delBtn.className = 'delBtn'
+  delBtn.addEventListener('click', () => {
+    delete character['Abilities'][abilityName]
+    abilityEle.remove()
+  })
+  abilityEle.appendChild(delBtn)
+  return abilityEle
 }

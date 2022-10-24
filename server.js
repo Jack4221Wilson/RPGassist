@@ -58,6 +58,33 @@ app.post('/save/character/:name', (req, res, next) => {
       }
     })
 })
+app.use(express.urlencoded({extended: true}))
+app.get('/forms/addingAbility', (req, res) => {
+  res.status(200).send(
+  `<form action="formSub/addingAbility" method="get">
+  <ul>
+    <li>
+      <label for="abilityName">Ability Name:</label>
+      <input type="text" id="abilityName" name="abilityName" required>
+    </li>
+    <li>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" required placeholder = "Add as much detail as you'd like. You can add a link to a better source in the next field if you don't want to get into the nitty gritty of what this ability does."></textarea>
+    </li>
+    <li>
+      <label for="refLink">Refrence Link:</label>
+      <input type="url" id="refLink" name="refLink" placeholder="https://referencePageHere.com">
+      <div><p class="explainer">Optional. Will create a button linked to the given URL; it is meant to provide better refrence for this ability</p></div>
+    </li>
+    <li>
+      <div>
+        <button type="button" class="add">Add Ability</button>
+        <button type="button" class="cancel">Cancel</button>
+      </div>
+    </li>
+  </ul>
+</form>`)
+})
 app.listen(
   port,
   () => {
