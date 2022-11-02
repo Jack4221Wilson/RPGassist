@@ -1,8 +1,12 @@
+var crypto = require('crypto')
 const path = require('path'),
 express = require('express'),
 fs = require('fs'),
+{ PrismaClient } = require('@prisma/client'),
+prisma = new PrismaClient(),
 app = express(), // creates a server with the express library
-port = 8001 // port for server
+port = 8001, // port for server
+hashAlg = 'sha256'
 
 // path to static 'front end' client-side files
 const path2site = path.join(__dirname, './clientSide')
@@ -58,6 +62,91 @@ app.post('/save/character/:name', (req, res, next) => {
       }
     })
 })
+function getHash(input, salt){
+  var hash = crypto.createHash(hashAlg)
+  hash.update(input + salt)
+  return hash.digest('hex')
+}
+async function createNewUser(userData) {
+ const creatingUser = await prisma.users.create({
+    data: { user_key: `${userData.user_key}`, pass_word: `${userData.pass_word}`, name: `${userData.name}`}
+   })
+   console.log(creatingUser)
+  }
+async function login(user_key, password){
+  const getUser = await prisma.users.findUnique({
+    where:{ 'user_key': user_key},
+  })
+  if (getUser == null) {throw 'No user with that username'}
+  else {
+    let hashed = getHash(password, user_key)
+    if (getUser['pass_word'] !== hashed) {throw 'wrong password'}
+    else {
+      console.log(getUser)
+      return getUser
+    }
+  }
+}
+async function loadUser(hashedPas){
+  let getUser = await prisma.users.findUnique({
+    where:{'pass_word': hashedPas}
+  })
+  if (getUser = null) {throw 'bad token'}
+  else {return getUser}
+}
+app.post('/users/user', async (req, res, next) => {
+  const token = req.body
+  console.log(token)
+  const getUser = await prisma.users.findUnique({
+    where:{'pass_word': token.token},
+  })
+  if (getUser == null) {console.log ('bad token')}
+  else {res.send(getUser)}
+})
+
+app.post('/users/login', async (req, res, next) => {
+  const loginData = req.body
+  console.log(loginData)
+  const getUser = await prisma.users.findUnique({
+      where:{ 'user_key': loginData.user_key},
+    })
+  if (getUser == null) {console.log(
+    'No user with that username'
+  )}
+  else {
+    const hashed = getHash(loginData.pass_word, loginData.user_key)
+    if (getUser.pass_word !== hashed) {
+      console.log('wrong password'
+    )}
+    else {
+      console.log(getUser)
+      if (res.headersSent != true){
+        console.log(getUser.pass_word)
+        res.send({
+          token: getUser.pass_word
+        })
+        
+      }
+    }
+  }
+})
+
+app.post('/users/create-user', (req, res, next) => {
+  const userData = req.body
+  userData.pass_word = getHash(userData.pass_word, userData.user_key)
+  createNewUser(userData)
+  .catch(e => {
+    console.error(e.message)
+    res.status(500).send('No can do buckaroo')
+    return
+  })
+  .finally(async () => {
+    if (res.headersSent != true){
+      res.status(200).send('user has been made')
+    }
+  })
+})
+
 app.use(express.urlencoded({extended: true}))
 app.get('/forms/addingAbility', (req, res) => {
   res.status(200).send(
@@ -85,6 +174,7 @@ app.get('/forms/addingAbility', (req, res) => {
   </ul>
 </form>`)
 })
+
 app.listen(
   port,
   () => {

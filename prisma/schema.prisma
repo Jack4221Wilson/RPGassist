@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model characters {
+  id            Int                        @id @default(autoincrement())
+  user_id       Int
+  name          String?                    @db.VarChar(255)
+  class         Json?
+  background    String?                    @db.VarChar(20)
+  race          String?                    @db.VarChar(20)
+  alignment     String?                    @db.VarChar(255)
+  experience    Int?
+  strength      Int?
+  dexterity     Int?
+  constitution  Int?
+  intelligence  Int?
+  wisdom        Int?
+  charisma      Int?
+  saving_throws Json?
+  speed         Int?
+  max_hp        Int?
+  hp            Int?
+  hit_dice      String?
+  death_saves   Json?
+  skills        Json?
+  equipment     Json?
+  spells        Json?
+  users         users                      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "characters_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model users {
+  id         Int          @id @default(autoincrement())
+  user_key   String       @unique(map: "user_key") @db.VarChar(255)
+  pass_word  String       @unique(map: "pass_word") @db.VarChar(255)
+  name  String  @db.VarChar(255)
+  characters characters[]
+
+  @@unique([user_key, pass_word])
+}

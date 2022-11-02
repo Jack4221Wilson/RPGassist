@@ -18,8 +18,18 @@
   },
   "homepage": "https://github.com/Jack4221Wilson/RPGassist#readme",
   "dependencies": {
+    "@prisma/client": "^4.5.0",
     "eslint": "^8.24.0",
     "express": "^4.18.1",
+    "handlebars": "^4.7.7",
+    "jsonwebtoken": "^8.5.1",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.5",
+    "nodemon": "^2.0.20",
+    "prisma": "^4.5.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
   }
 }
