@@ -62,6 +62,7 @@ app.post('/save/character/:name', (req, res, next) => {
       }
     })
 })
+// creates a hash
 function getHash(input, salt){
   var hash = crypto.createHash(hashAlg)
   hash.update(input + salt)
@@ -96,32 +97,34 @@ async function loadUser(hashedPas){
 }
 app.post('/users/user', async (req, res, next) => {
   const token = req.body
-  console.log(token)
   const getUser = await prisma.users.findUnique({
     where:{'pass_word': token.token},
   })
   if (getUser == null) {console.log ('bad token')}
   else {res.send(getUser)}
 })
-
+// Handles login attempts
 app.post('/users/login', async (req, res, next) => {
   const loginData = req.body
-  console.log(loginData)
   const getUser = await prisma.users.findUnique({
       where:{ 'user_key': loginData.user_key},
     })
-  if (getUser == null) {console.log(
-    'No user with that username'
-  )}
+  if (getUser == null) {
+    res.status(400).send({error: {
+      code: 0,
+      message: 'No user with that username'
+    }})
+  }
   else {
     const hashed = getHash(loginData.pass_word, loginData.user_key)
     if (getUser.pass_word !== hashed) {
-      console.log('wrong password'
-    )}
+      res.status(400).send({error: {
+        code: 1,
+        message: 'Wrong password'
+      }})
+    }
     else {
-      console.log(getUser)
       if (res.headersSent != true){
-        console.log(getUser.pass_word)
         res.send({
           token: getUser.pass_word
         })
@@ -130,14 +133,13 @@ app.post('/users/login', async (req, res, next) => {
     }
   }
 })
-
+// creates a new user
 app.post('/users/create-user', (req, res, next) => {
   const userData = req.body
   userData.pass_word = getHash(userData.pass_word, userData.user_key)
   createNewUser(userData)
   .catch(e => {
-    console.error(e.message)
-    res.status(500).send('No can do buckaroo')
+    res.status(400).send('Username already taken')
     return
   })
   .finally(async () => {

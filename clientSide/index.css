@@ -1,11 +1,109 @@
 :root{
-  --sansSerif: 'Verdana', sans-serif;
-  --serif: 'didot', serif;
-  --black: #1c2826;
-  --green: #ceea9a;
-  --darkGreen: #5D852D;
-  --white: #eef4d4;
+  --sans: 'Montserrat', sans-serif;
+  --serif: 'Josefin Slab', serif;
+  --mono: 'Noto Sans Mono', monospace;
+  --black: #01161E;
+  --dark: #143947;
+  --mid: #275B6F;
+  --light: #6792A2;
+  --white: #DCE5DD;
   --peach: #EA9E8D;
-  --darkPeach: #613C30;
   --red: #EC5D69;
+  --green: #ACDF3E;
+  --blue: #34A8D5;
+}
+
+body {
+  background-color: var(--dark);
+  color: var(--white);
+  font-family: var(--mono);
+}
+h1 {
+  font-family: var(--sans);
+  font-weight: 900;
+  font-size: 4vw;
+  color: var(--blue);
+}
+p {
+  font-size: 1rem;
+  margin: 0;
+}
+.hero {
+  width: 80vw; 
+  margin-inline: auto;
+}
+.flex-container {
+  display: flex;
+}
+.flex-item {
+  display: flex;
+  width: 50%;
+  justify-content: center;
+}
+button {
+  background-color: var(--light);
+  border: none;
+  outline: none;
+  height: max-content;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--dark);
+  border-radius: 1.6rem;
+  padding: 2%;
+}
+button:hover {
+  background-color: var(--white);
+}
+button:active {
+  background-color: var(--green);
+}
+form button {
+  font-size: 1rem;
+}
+form {
+  background-color: var(--mid);
+  width: 100%;
+  height: max-content;
+  margin: 2%;
+  padding: 4%;
+  border-radius: 1rem;
+}
+form:focus-within, form:hover {
+  outline: solid 3px var(--blue);
+}
+ul {
+  list-style: none;
+  width: max-content;
+  margin: auto;
+  padding: 0;
+  text-align: right;
+}
+li {
+  font-size: 1.5rem;
+  margin: 0.3rem;
+}
+label {
+  font-family: var(--serif);
+}
+input {
+  background-color: var(--light);
+  outline: none;
+  border: none;
+  color: var(--black);
+  font-family: var(--mono);
+  font-size: 1.25rem;
+}
+input::placeholder {
+  color: var(--mid);
+}
+input:hover {
+  background-color: var(--white);
+}
+p.err {
+  color: var(--red);
+  text-align: right;
+}
+p.success {
+  color: var(--green);
 }

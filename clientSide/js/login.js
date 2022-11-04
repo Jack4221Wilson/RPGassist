@@ -4,7 +4,7 @@ const origin = window.location.origin
 if (token == null) {
   if (window.location.href !== origin + '/login.html') {
     console.log(window.location)
-    //window.location.href = 'login.html'
+    window.location.href = 'login.html'
   }
 } else {
   loadUser()
@@ -59,8 +59,22 @@ function signUp (parentDiv) {
       body: JSON.stringify(bodyObj),
     })
     const answer = await response.text()
-    console.log(answer)
-    signUpForm.replaceWith(signUpBtn)
+    msgEle = document.createElement('p')
+    if (response.ok == true) {
+      msgEle.innerHTML = '<b>Success!</b> Now please log in'
+      msgEle.className = 'success'
+      signUpForm.replaceWith(msgEle)
+      return
+    }
+    msgEle.innerHTML = `${answer}`
+    msgEle.className = 'err'
+    signUpForm.append(msgEle)
+    const badInput = signUpForm.querySelector('input#user_key')
+    badInput.style = 'outline: solid 3px var(--red)'
+    badInput.addEventListener('focus', () => {
+      badInput.style = ''
+      msgEle.remove()
+    })
   })
 }
 
@@ -101,8 +115,35 @@ async function login(source) {
   })
   const resData = await response.json()
   console.log(resData)
-  localStorage.setItem('storedLogin', resData.token)
-  window.location.href = './index.html'
+  if (Object.keys(resData)[0] == 'error'){
+    const errCode = resData.error.code
+    const errMsg = resData.error.message
+    const msgEle = document.createElement('p')
+    msgEle.className = 'err'
+    msgEle.innerHTML = `${errMsg}`
+    console.log(errCode, errMsg)
+    if (errCode === 0) {
+      const badInput = sourceEle.querySelector('input#user_key')
+      badInput.style = 'outline: solid 3px var(--red)'
+      sourceEle.append(msgEle)
+      badInput.addEventListener('focus', () => {
+        badInput.style =''
+        msgEle.remove()
+      })
+      return
+    }
+    const badInput = sourceEle.querySelector('input#pass_word')
+    badInput.style = 'outline: solid 3px var(--red)'
+    sourceEle.append(msgEle)
+    badInput.addEventListener('focus', () => {
+      badInput.style =''
+      msgEle.remove()
+      })
+      return
+  } else {
+    localStorage.setItem('storedLogin', resData.token)
+    window.location.href = './index.html'
+  }
 }
 
 async function loadUser() {
