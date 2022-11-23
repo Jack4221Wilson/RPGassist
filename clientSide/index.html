@@ -9,9 +9,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans+Mono:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   </head>
   <body>
+    <nav>
+      <div class="user-info">
+        <h2 class="user-name"></h2>
+        <p class="user-key"></p>
+      </div>
+      <div class="user-options">
+        <button id="logout" type="button">logout</button>
+      </div>
+    </nav>
+
     <div class="hero">
+      <div class="flex-container">
+        <div class="left-wrapper">
+
+          <div class="characters-container">
+            <div class="characters-list">
+              <div class="top-bar">
+                <h3>characters</h3>
+                <button id="new-character">New Character</button>
+              </div>
+              <div class="characters-grid"></div>
+            </div>
+          </div>
+
+          <div class="character-options flex-container"></div>
+
+        </div>
+      </div>
     </div>
+
     <script src="/js/utilities.js"></script>
     <script src="/js/login.js"></script>
+    <script src="/js/characterSheet.js"></script>
   </body>
 </html>

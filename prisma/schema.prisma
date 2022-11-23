@@ -12,25 +12,20 @@ model characters {
   user_id       Int
   name          String?                    @db.VarChar(255)
   class         Json?
+  experience  Int?
   background    String?                    @db.VarChar(20)
   race          String?                    @db.VarChar(20)
   alignment     String?                    @db.VarChar(255)
-  experience    Int?
-  strength      Int?
-  dexterity     Int?
-  constitution  Int?
-  intelligence  Int?
-  wisdom        Int?
-  charisma      Int?
-  saving_throws Json?
+  stats         Json?
   speed         Int?
-  max_hp        Int?
-  hp            Int?
-  hit_dice      String?
+  inspiration Int?
+  proficiency_bonus Int?
+  hp            Json?
   death_saves   Json?
   skills        Json?
   equipment     Json?
   spells        Json?
+  abilities Json?
   users         users                      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "characters_ibfk_1")
 
   @@index([user_id], map: "user_id")

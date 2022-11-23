@@ -1,0 +1,487 @@
+<div class="sheet">
+  <h3 class="character-name" contenteditable="true">
+    (Your Name Here)
+  </h3>
+  <div class="flex-container">
+    <div class="identity">
+      <div class="flex-container">
+        <p>Race:</p>
+        <input type="text"
+        placeholder="Human, Elf, Gnome"
+        id="race">
+      </div>
+      <div class="flex-container">
+        <p>Background:</p>
+        <input type="text"
+        placeholder="Nomad, Folk Hero"
+        id="background">
+      </div>
+      <div class="flex-container">
+        <p>Alignment:</p>
+        <input type="text"
+        placeholder="True Neutral"
+        id="alignment">
+      </div>
+    </div>
+
+    <div class="class-details">
+      <div class="classes">
+        <p class="group-header">Classes</p>
+        <div class="class-0 flex-container">
+          <input type="text" placeholder="class name" id="class.class_0.name">
+          <div class="flex-container">
+            <p>Lvl:</p>
+            <input type="number" placeholder="2" id="class.class_0.lvl">
+          </div>
+        </div>
+        <div class="class-1 flex-container">
+          <input type="text" placeholder="class name" id="class.class_1.name">
+          <div class="flex-container">
+            <p>Lvl:</p>
+            <input type="number" placeholder="5" id="class.class_1.lvl">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="experience flex-container">
+    <p>Exp:</p>
+    <input type="number" placeholder="has to be a number" id="experience">
+  </div>
+
+  <div class="hp">
+    <div class="flex-container">
+      <p class="group-header">HP</p>
+      <div class="current flex-container">
+        <p>Current:</p>
+        <input type="number" placeholder="100"
+        id="hp.current">
+      </div>
+      <div class="max flex-container">
+        <p>Max:</p>
+        <input type="number" placeholder="100"
+        id="hp.max">
+      </div>
+      <div class="temp flex-container">
+        <p>Temp:</p>
+        <input type="number" placeholder="222"
+        id="hp.temp">
+      </div>
+      <div class="hit-dice flex-container">
+        <p>Hit-Dice:</p>
+        <input type="text" placeholder="1d6"
+        id="hp.hit_dice">
+      </div>
+    </div>
+  </div>
+
+  <div class="death-saves">
+    <div class="flex-container">
+      <p class="group-header">Death Saves</p>
+      <div class="pass flex-container">
+        <p>Passes:</p>
+        <input class="checkbox" type="button" value="false"
+        id="death_saves.pass">
+        <input class="checkbox" type="button" value="false"
+        id="death_saves.pass">
+        <input class="checkbox" type="button" value="false"
+        id="death_saves.pass">
+      </div>
+      <div class="fail flex-container">
+        <p>Fails:</p>
+        <input class="checkbox" type="button" value="false"
+        id="death_saves.fail">
+        <input class="checkbox" type="button" value="false"
+        id="death_saves.fail">
+        <input class="checkbox" type="button" value="false"
+        id="death_saves.fail">
+      </div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="flex-container">
+      <p class="group-header">Stats</p>
+      <div class="grid-container">
+        <div class="str">
+          <p><b>STR</b></p>
+          <div class="flex-container">
+            <div class="base">
+              <p>Base:</p>
+              <input type="number" class="align-center" placeholder="10" id="stats.str.base">
+            </div>
+            <div class="mod align-center">
+              <p>Mod:</p>
+              <p class="str-mod">0</p>
+            </div>
+            <div class="save">
+              <p>Save:</p>
+              <input class="checkbox align-center" type="button"
+              id="stats.str.save" value="false">
+            </div>
+          </div>
+        </div>
+        <div class="dex">
+          <p><b>DEX</b></p>
+          <div class="flex-container">
+            <div class="base">
+              <p>Base:</p>
+              <input type="number" class="align-center" placeholder="10" id="stats.dex.base">
+            </div>
+            <div class="mod">
+              <p>Mod:</p>
+              <p class="dex-mod align-center">0</p>
+            </div>
+            <div class="save">
+              <p>Save:</p>
+              <input class="checkbox align-center" type="button"
+              id="stats.dex.save" value="false">
+            </div>
+          </div>
+        </div>
+        <div class="con">
+          <p><b>CON</b></p>
+          <div class="flex-container">
+            <div class="base">
+              <p>Base:</p>
+              <input class="align-center" type="number" placeholder="10" id="stats.con.base">
+            </div>
+            <div class="mod">
+              <p>Mod:</p>
+              <p class="con-mod align-center">0</p>
+            </div>
+            <div class="save">
+              <p>Save:</p>
+              <input class="checkbox align-center" type="button"
+              id="stats.con.save" value="false">
+            </div>
+          </div>
+        </div>
+        <div class="int">
+          <p><b>INT</b></p>
+          <div class="flex-container">
+            <div class="base">
+              <p>Base:</p>
+              <input class="align-center" type="number" placeholder="10" id="stats.int.base">
+            </div>
+            <div class="mod">
+              <p>Mod:</p>
+              <p class="int-mod align-center">0</p>
+            </div>
+            <div class="save">
+              <p>Save:</p>
+              <input class="checkbox align-center" type="button"
+              id="stats.int.save" value="false">
+            </div>
+          </div>
+        </div>
+        <div class="wis">
+          <p><b>WIS</b></p>
+          <div class="flex-container">
+            <div class="base">
+              <p>Base:</p>
+              <input class="align-center" type="number" placeholder="10" id="stats.wis.base">
+            </div>
+            <div class="mod">
+              <p>Mod:</p>
+              <p class="wis-mod align-center">0</p>
+            </div>
+            <div class="save">
+              <p>Save:</p>
+              <input class="checkbox align-center" type="button"
+              id="stats.wis.save" value="false">
+            </div>
+          </div>
+        </div>
+        <div class="cha">
+          <p><b>CHA</b></p>
+          <div class="flex-container">
+            <div class="base">
+              <p>Base:</p>
+              <input class="align-center" type="number" placeholder="10" id="stats.cha.base">
+            </div>
+            <div class="mod">
+              <p>Mod:</p>
+              <p class="cha-mod align-center">0</p>
+            </div>
+            <div class="save">
+              <p>Save:</p>
+              <input class="checkbox align-center" type="button"
+              id="stats.cha.save" value="false">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="battle-stats">
+    <div class="flex-container">
+      <div class="speed">
+        <p>Speed(ft):</p>
+        <input type="number" class="align-center" placeholder="30" id="speed">
+      </div>
+      <div class="inspiration">
+        <p>Inspiration:</p>
+        <input type="number" class="align-center" placeholder="0" id="inspiration">
+      </div>
+      <div class="initiative">
+        <p>Initiative:</p>
+        <p class="dex-mod align-center">0</p>
+      </div>
+      <div class="proficiency-bonus">
+        <p>Proficiency Bonus:</p>
+        <input type="number"class="align-center" placeholder="2"
+        id="proficiency_bonus">
+      </div>
+      <div class="amour-class">
+        <p>Amour Class:</p>
+        <p class="AC align-center">0</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="skills">
+    <div class="flex-container">
+      <p class="group-header">Skills</p>
+      <div class="grid-container">
+        <div class="acrobatics grid-row">
+          <p><b>Acrobatics:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="dex-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.acrobatics" value="false">
+          </div>
+        </div>
+        <div class="animal_handling grid-row">
+          <p><b>Animal Handling:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="wis-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.animal_handling" value="false">
+          </div>
+        </div>
+        <div class="arcana grid-row">
+          <p><b>Arcana:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="int-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.arcana" value="false">
+          </div>
+        </div>
+        <div class="athletics grid-row">
+          <p><b>Athletics:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="str-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.athletics" value="false">
+          </div>
+        </div>
+        <div class="deception grid-row">
+          <P><b>Deception:</b></P>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="cha-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.deception" value="false">
+          </div>
+        </div>
+        <div class="history grid-row">
+          <p><b>History:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="int-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.history" value="false">
+          </div>
+        </div>
+        <div class="insight grid-row">
+          <p><b>Insight:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="wis-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.insight" value="false">
+          </div>
+        </div>
+        <div class="intimidation grid-row">
+          <p><b>Intimidation:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="cha-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.intimidation" value="false">
+          </div>
+        </div>
+        <div class="investigation grid-row">
+          <p><b>Investigation:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="int-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.investigation" value="false">
+          </div>
+        </div>
+        <div class="medicine grid-row">
+          <p><b>Medicine:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="wis-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.medicine" value="false">
+          </div>
+        </div>
+        <div class="nature grid-row">
+          <p><b>Nature:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="wis-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.nature" value="false">
+          </div>
+        </div>
+        <div class="perception grid-row">
+          <p><b>Perception:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="wis-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <P>Proficiency:</P>
+            <input class="checkbox" type="button"
+            id="skills.perception" value="false">
+          </div>
+        </div>
+        <div class="performance grid-row">
+          <p><b>Performance:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="cha-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.performance" value="false">
+          </div>
+        </div>
+        <div class="persuasion grid-row">
+          <p><b>Persuasion:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="cha-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.persuasion" value="false">
+          </div>
+        </div>
+        <div class="religion grid-row">
+          <p><b>Religion:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="int-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.religion" value="false">
+          </div>
+        </div>
+        <div class="sleight_of_hand grid-row">
+          <p><b>Sleight Of Hand:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="dex-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.sleight_of_hand" value="false">
+          </div>
+        </div>
+        <div class="stealth grid-row">
+          <p><b>Stealth:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="dex-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.stealth" value="false">
+          </div>
+        </div>
+        <div class="survival grid-row">
+          <p><b>Survival:</b></p>
+          <div class="mod flex-container">
+            <p>Mod:</p>
+            <p class="wis-mod">0</p>
+          </div>
+          <div class="proficiency flex-container">
+            <p>Proficiency:</p>
+            <input class="checkbox" type="button"
+            id="skills.survival" value="false">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="equipment">
+    <p class="group-header">Equipment:</p>
+  </div>
+
+  <div class="spell-stuff">
+    <p class="group-header">Spells</p>
+    <div class="spell-class">
+      <p>spellclass name</p>
+      <div class="spell-attack-bonus"></div>
+      <div class="spell-save-dc"></div>
+      <div class="spellcasting-ability"></div>
+    </div>
+  </div>
+
+  <div class="abilities">
+    <p class="group-header">Abilities:</p>
+    <div class="list"></div>
+  </div>
+</div>

@@ -68,6 +68,7 @@ function getHash(input, salt){
   hash.update(input + salt)
   return hash.digest('hex')
 }
+// Creates a new user
 async function createNewUser(userData) {
  const creatingUser = await prisma.users.create({
     data: { user_key: `${userData.user_key}`, pass_word: `${userData.pass_word}`, name: `${userData.name}`}
@@ -95,13 +96,18 @@ async function loadUser(hashedPas){
   if (getUser = null) {throw 'bad token'}
   else {return getUser}
 }
+// handles user data requests
 app.post('/users/user', async (req, res, next) => {
   const token = req.body
   const getUser = await prisma.users.findUnique({
     where:{'pass_word': token.token},
   })
-  if (getUser == null) {console.log ('bad token')}
-  else {res.send(getUser)}
+  if (getUser == null) {
+    res.status(400).send({error: {
+      message: 'bad token'
+    }})
+  }
+  else {if(res.headersSent != true){res.send(getUser)}}
 })
 // Handles login attempts
 app.post('/users/login', async (req, res, next) => {
@@ -147,6 +153,81 @@ app.post('/users/create-user', (req, res, next) => {
       res.status(200).send('user has been made')
     }
   })
+})
+// Sends the blank character sheet
+app.get('/character/blank', (req, res, next) => {
+  res.sendFile(path2site + '/pages/elements/blankSheet.html', (err) => {
+    if (err) {
+      next(err)
+    }
+  })
+})
+// Handles character saves by creating a new character or
+// updating an existing one
+app.post('/character/save', async (req, res) => {
+  const charData = req.body.data
+  const charId = req.body.id
+  let resBody
+  if (charId == null) {
+    const createChar = await prisma.characters.create({
+      data: charData
+    })
+    resBody = {
+      id: 0,
+      message: 'Character created!',
+      data: createChar.id
+    }
+    if (res.headersSent != true){
+      res.status(200).json(resBody)
+    }
+  } else {
+    const updateChar = await prisma.characters.update({
+      where: { id: charId},
+      data: charData
+    })
+    updateChar
+    resBody = {
+      id: 1,
+      message: 'Character Updated!'
+    }
+    if (res.headersSent != true){
+      res.status(200).json(resBody)
+    }
+  }
+})
+// Sends information on the user's characters to be shown
+// in a list
+app.get('/character/user/:id.:gridStart', async (req, res) => {
+  const getCharList = await prisma.characters.findMany({
+    where: {user_id: parseInt(req.params.id, 10)},
+    skip: parseInt(req.params.gridStart, 10),
+    take: 30,
+    select: {
+      id: true,
+      name: true,
+      class: true,
+      race: true
+    }
+  })
+  res.json(getCharList)
+})
+// Sends the requested character info
+app.get('/character/id/:id', async (req, res) => {
+  const getCharData = await prisma.characters.findUnique({
+    where: {id: parseInt(req.params.id)}
+  })
+  res.json(getCharData)
+})
+// Deletes the requested character
+app.get('/character/delete/:id', async (req, res) => {
+  const deleteChar = await prisma.characters.delete({
+    where: { id: parseInt(req.params.id)}
+  })
+  deleteChar
+  const response = {
+    message: 'character deleted'
+  }
+  res.json(response)
 })
 
 app.use(express.urlencoded({extended: true}))

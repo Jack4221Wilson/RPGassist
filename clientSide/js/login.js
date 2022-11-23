@@ -1,5 +1,4 @@
 const token = localStorage.getItem('storedLogin')
-console.log(token)
 const origin = window.location.origin
 if (token == null) {
   if (window.location.href !== origin + '/login.html') {
@@ -145,10 +144,9 @@ async function login(source) {
     window.location.href = './index.html'
   }
 }
-
+let userData
 async function loadUser() {
   const token = localStorage.getItem('storedLogin')
-  console.log(token)
   const response = await fetch('/users/user', {
     method: 'POST',
     headers: {
@@ -156,8 +154,20 @@ async function loadUser() {
     },
     body: JSON.stringify({token})
   })
-  const userData = await response.json()
-  console.log(userData)
+  userData = await response.json()
+  if (response.ok != true) {
+    localStorage.removeItem('storedLogin')
+    window.location.href = 'login.html'
+    return
+  }
+  const nameEle = document.querySelector('h2.user-name')
+  const userKeyEle = document.querySelector('p.user-key')
+  nameEle.innerHTML = userData.name
+  userKeyEle.innerHTML = `Username: ${userData.user_key}`
+  
+  const logoutBtn = document.querySelector('#logout')
+  logoutBtn.addEventListener('click', () => {logout()})
+  fillGrid(userData.id)
 }
 
 function logout() {
