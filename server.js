@@ -162,6 +162,13 @@ app.get('/character/blank', (req, res, next) => {
     }
   })
 })
+app.get('/character/blankASE', (req, res, next) => {
+  res.sendFile(path2site + '/pages/elements/ase.html', (err) => {
+    if (err) {
+      next(err)
+    }
+  })
+})
 // Handles character saves by creating a new character or
 // updating an existing one
 app.post('/character/save', async (req, res) => {

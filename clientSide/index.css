@@ -358,3 +358,26 @@ div.character-options {
   color: var(--peach);
   width: 2ch;
 }
+.right-wrapper {
+  width: calc(50% - 0.5rem);
+  margin-left: 0.5rem;
+}
+.tab {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.tab[data-selected="true"] {
+  background-color: var(--black);
+  color: var(--white);
+}
+.ase-wrapper {
+  background-color: var(--black);
+  padding: 1rem;
+  border-bottom-left-radius: 1.6rem;
+  border-bottom-right-radius: 1.6rem;
+  border-top-right-radius: 1.6rem;
+  height: calc(80vh - 55px);
+}
+.ase-wrapper div{
+  display: none;
+}

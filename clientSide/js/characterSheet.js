@@ -1,7 +1,8 @@
 
 const charactersDiv = document.querySelector('.characters-container'),
 charList = document.querySelector('.characters-list'),
-charOptions = document.querySelector('.character-options')
+charOptions = document.querySelector('.character-options'),
+rightWrapper = document.querySelector('.right-wrapper')
 const newBtn = document.querySelector('#new-character')
 var charId = null
 const blankData = {
@@ -75,7 +76,9 @@ const blankData = {
   spells: {},
   abilities: {},
 }
-let charData = blankData
+let charData = blankData,
+aseTabs,
+aseWrapper
 
 // Creates a new blank character sheet
 newBtn.addEventListener('click', async () => {
@@ -118,6 +121,7 @@ closeBtn.className = 'character-options'
 closeBtn.addEventListener('click', async () =>{
   charactersDiv.replaceChildren(charList)
   charOptions.replaceChildren()
+  rightWrapper.replaceChildren()
   fillGrid(userData.id)
 })
 /* 
@@ -159,6 +163,8 @@ deleteBtn.addEventListener('click', async () => {
     charactersDiv.replaceChildren(charList)
     charOptions.replaceChildren()
     fillGrid(userData.id)
+
+    rightWrapper.replaceChildren()
   })
 })
 /* 
@@ -166,17 +172,35 @@ deleteBtn.addEventListener('click', async () => {
   character option buttons 
 */
 async function getBlank () {
-  const response = await fetch('/character/blank', {
+  const sheetResponse = await fetch('/character/blank', {
     method: 'GET',
     headers: {
       'content-type': 'text/xml'
     }
   })
-  const resData = await response.text()
+  const sheetData = await sheetResponse.text()
   const charSheet = document.createElement('div')
-  charSheet.innerHTML = resData
+  charSheet.innerHTML = sheetData
   charactersDiv.replaceChildren(charSheet)
 
+  // Gets the Abilities, Spells, and Equipment parts of the character
+  const aseResponse = await fetch('/character/blankASE', {
+    method: 'GET',
+    headers: {'content-type': 'text/html'}
+  })
+  const aseData = await aseResponse.text()
+  const aseDiv = document.createElement('div')
+  aseDiv.innerHTML = aseData
+  rightWrapper.replaceChildren(aseDiv)
+  // Handles the Tabs to select which part to see
+  aseTabs = aseDiv.querySelectorAll('.tab')
+  aseWrapper = aseDiv.querySelector('.ase-wrapper')
+  aseTabArray = Array.from(aseTabs)
+  console.log(aseTabs, aseTabArray)
+  aseTabArray.forEach((thing, i) => {
+    aseTabs[i].addEventListener('click', () => aseTabSelector(aseTabs[i]))
+  })
+  
   findInputs()
 
   charOptions.appendChild(saveBtn)
@@ -386,4 +410,19 @@ async function fillGrid (user_id) {
     })
     charGrid.appendChild(charEle)
   })
+}
+// Changes whether abilities, spells, or equipment is shown
+function aseTabSelector (element) {
+  const eleId = element.dataset.id
+  const eleSelected = element.dataset.selected
+  if (eleSelected !== 'true') {
+    const oldSelected = rightWrapper.querySelector('button[data-selected="true"')
+    const oldId = oldSelected.dataset.id
+    const oldShown = aseWrapper.querySelector(`div[data-id="${oldId}"`)
+    const eleToShow = aseWrapper.querySelector(`div[data-id="${eleId}"`)
+    oldShown.removeAttribute('style')
+    oldSelected.dataset.selected = false
+    eleToShow.style.display = 'block'
+    element.dataset.selected = true
+  }
 }
