@@ -24,9 +24,9 @@ for (const name of Object.keys(nets)) {
       const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
       if (net.family === familyV4Value && !net.internal) {
           if (!results[name]) {
-              results[name] = [];
+              results.name = [];
           }
-          results[name].push(net.address);
+          results.name.push(net.address);
       }
   }
 }
@@ -268,6 +268,6 @@ app.get('/forms/addingAbility', (req, res) => {
 app.listen(
   port,
   () => {
-    console.log(`Dance floor is at http://${results.en0[0]}:${port}`)
+    console.log(`Dance floor is at http://${results.name}:${port}`)
   }
 )
