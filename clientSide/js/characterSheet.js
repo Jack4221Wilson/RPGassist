@@ -4,7 +4,8 @@ charList = document.querySelector('.characters-list'),
 charOptions = document.querySelector('.character-options'),
 rightWrapper = document.querySelector('.right-wrapper')
 const newBtn = document.querySelector('#new-character')
-var charId = null
+var charId = null,
+gridStart = 0
 const blankData = {
   user_id: null,
   name: '',
@@ -74,7 +75,11 @@ const blankData = {
   },
   equipment: {},
   spells: {},
-  abilities: {},
+  abilities: {
+    tags: ['active', 'passive'],
+    active: {},
+    passive: {}
+  },
 }
 let charData = blankData,
 aseTabs,
@@ -383,7 +388,6 @@ function changeSkillProf(inputEle) {
   }
 }
 // Creates a grid filled with characters the user has made
-var gridStart = 0
 async function fillGrid (user_id) {
   const charGrid = charList.querySelector('.characters-grid')
   charGrid.replaceChildren()
