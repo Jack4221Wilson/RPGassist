@@ -162,6 +162,7 @@ app.get('/character/blank', (req, res, next) => {
     }
   })
 })
+// Sends the Ability, Spell, and Equipment area of the sheet
 app.get('/character/blankASE', (req, res, next) => {
   res.sendFile(path2site + '/pages/elements/ase.html', (err) => {
     if (err) {
@@ -235,6 +236,14 @@ app.get('/character/delete/:id', async (req, res) => {
     message: 'character deleted'
   }
   res.json(response)
+})
+//sends forms to a user's client
+app.get('/character/form/:type', (req, res, next) => {
+  res.sendFile(path2site + `/pages/elements/${req.params.type}`, (err) => {
+    if (err) {
+      next(err)
+    }
+  })
 })
 
 app.use(express.urlencoded({extended: true}))

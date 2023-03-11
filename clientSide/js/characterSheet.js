@@ -77,8 +77,7 @@ const blankData = {
   spells: {},
   abilities: {
     tags: ['active', 'passive'],
-    active: {},
-    passive: {}
+    list: []
   },
 }
 let charData = blankData,
@@ -201,12 +200,51 @@ async function getBlank () {
   aseTabs = aseDiv.querySelectorAll('.tab')
   aseWrapper = aseDiv.querySelector('.ase-wrapper')
   aseTabArray = Array.from(aseTabs)
-  console.log(aseTabs, aseTabArray)
   aseTabArray.forEach((thing, i) => {
     aseTabs[i].addEventListener('click', () => aseTabSelector(aseTabs[i]))
   })
-  
+
+  addAbilityButtons = aseWrapper.querySelectorAll('button.new[data-id="abilities"]')
+  let addAbilityArray = Array.from(addAbilityButtons)
+  addAbilityArray.forEach((thing, i) => {
+    addAbilityButtons[i].addEventListener('click', async () => {
+      const form = await addAbilityForm()
+      addAbilityButtons[i].insertAdjacentElement('afterend', form)
+      const addBtn = form.querySelector('#add'),
+      cancelBtn = form.querySelector('#cancel')
+      addBtn.addEventListener('click', () => {addAbility(formDiv)})
+      cancelBtn.addEventListener('click', () => {
+        form.remove()
+      })
+    })
+  })
+
+  const abilityTags = charData.abilities.tags
+  const tagDiv = aseWrapper.querySelector('.abilities .tag-list')
+  const abilityList = aseWrapper.querySelector('.abilities .list')
+  abilityTags.forEach((thing, i) => {
+    const tagChip = document.createElement('p')
+    tagChip.className = 'tagChip'
+    tagChip.innerHTML = `${charData.abilities.tags[i]}`
+    tagChip.setAttribute('data-selected', 'false')
+    tagChip.addEventListener('click', () => {
+      if (tagChip.getAttribute('data-selected') == 'false') {
+        tagChip.setAttribute('data-selected', 'true')
+        tagChip.setAttribute('style', 'background-color: var(--green); border-color: var(--green); color: var(--dark)')
+        abilityList.replaceChildren()
+        showAbilities()
+        return
+      }
+      tagChip.setAttribute('data-selected', 'false')
+      tagChip.removeAttribute('style')
+      abilityList.replaceChildren()
+      showAbilities()
+    })
+    tagDiv.appendChild(tagChip)
+  })
+
   findInputs()
+  showAbilities()
 
   charOptions.appendChild(saveBtn)
   charOptions.appendChild(closeBtn)
@@ -410,6 +448,7 @@ async function fillGrid (user_id) {
     charEle.addEventListener('click', async () => {
       const getCharData = await fetch(`/character/id/${char.id}`, {method: 'GET'})
       charData = await getCharData.json()
+      charId = charData.id
       getBlank()
     })
     charGrid.appendChild(charEle)
@@ -429,4 +468,142 @@ function aseTabSelector (element) {
     eleToShow.style.display = 'block'
     element.dataset.selected = true
   }
+}
+// Gets the ability form
+async function addAbilityForm () {
+  const getForm = await fetch('/character/form/abilityForm.html', {
+    method: 'GET',
+    headers: {'content-type': 'text/html'}
+  })
+  const form = await getForm.text()
+  formDiv = document.createElement('div')
+  formDiv.className = 'form abilities'
+  formDiv.innerHTML = form
+  
+  return formDiv
+}
+function addAbility(abilityForm, place) {
+  let newAbility = {}
+  const typeInput = abilityForm.querySelector('#abilityType'),
+  nameInput = abilityForm.querySelector('#abilityName'),
+  descriptionInput = abilityForm.querySelector('#description'),
+  refLinkInput = abilityForm.querySelector('#refrenceLink')
+  newAbility.type = typeInput.value
+  newAbility.name = nameInput.value
+  newAbility.description = descriptionInput.value
+  if (refLinkInput.value.length > 0) {
+    newAbility.refLink = refLinkInput.value
+  } else { newAbility.refLink = null }
+  if (! Object.hasOwn(charData.abilities, 'list')) {
+    console.log (Object.values(charData.abilities))
+    console.log("reformating charData")
+    charData.abilities = blankData.abilities
+  }
+  if (place === undefined) {
+    charData.abilities.list.push(newAbility)
+    abilityEle = createAbilityEle(newAbility, charData.abilities.list.length - 1)
+    aseWrapper.querySelector('.abilities .list').append(abilityEle)
+    abilityForm.remove()
+  } else {
+    charData.abilities.list[place] = newAbility
+    abilityEle = createAbilityEle(newAbility, place)
+    abilityForm.replaceWith(abilityEle)
+  }
+}
+// Adds abilities to the list
+function createAbilityEle (ability, place) {
+  const abilityDiv = document.createElement('div'),
+  buttonsDiv = document.createElement('div'),
+  editBtn = document.createElement('button'),
+  deleteAbilityBtn = document.createElement('button'),
+  nameString = `<p class="group-header">${ability.name}</p>`,
+  typeString = `<p class="tags">${ability.type}</p>`,
+  description = `<p>${ability.description}</p>`
+
+  if (ability.refLink != null || "") {
+    const refBtn = document.createElement('button')
+    refBtn.className = 'reference-button'
+    refBtn.addEventListener('click', () => {window.open(`${ability.refLink}`)})
+    refBtn.innerHTML = 'Refrence'
+    buttonsDiv.appendChild(refBtn)
+  }
+  editBtn.className = 'edit-ability'
+  editBtn.innerHTML = 'Edit'
+  editBtn.addEventListener('click', () => {editAbilityForm(abilityDiv, place)})
+  deleteAbilityBtn.className = 'delete delete-ability'
+  deleteAbilityBtn.innerHTML = 'Delete'
+  deleteAbilityBtn.addEventListener('click', () => {
+    aseWrapper.querySelector('.abilities .list').replaceChildren()
+    charData.abilities.list.splice(place, 1)
+    showAbilities()
+  })
+  buttonsDiv.append(editBtn, deleteAbilityBtn)
+
+  abilityDiv.className = 'ability'
+  abilityDiv.setAttribute('data-place', place)
+  let innerString = nameString + typeString + description
+  abilityDiv.innerHTML = innerString
+  abilityDiv.append(buttonsDiv)
+
+  return abilityDiv
+}
+// Loads a character's abilities
+function showAbilities () {
+  if (charData.abilities.list == null) { console.log('no abilities'); return }
+
+  const tagList = aseWrapper.querySelector('.abilities .tag-list').children
+  const tagListArray = Array.from(tagList)
+  let selectedTags = []
+  tagListArray.forEach((thing, i) => {
+    const tagEle = tagList[i]
+    if (tagEle.dataset.selected === 'true') {selectedTags.push(tagEle.innerHTML)}
+  })
+  if (selectedTags.length > 0){
+    console.log(selectedTags.length)
+    charData.abilities.list.forEach((thing, i) => {
+      const test = checkForTags(thing, selectedTags)
+      if (test === true) {
+        abilityEle = createAbilityEle(thing, i)
+        aseWrapper.querySelector('.abilities .list').append(abilityEle)
+      }
+    })
+    return
+  }
+  charData.abilities.list.forEach((thing, i) => {
+    abilityEle = createAbilityEle(thing, i)
+    aseWrapper.querySelector('.abilities .list').append(abilityEle)
+  })
+}
+function checkForTags (ability, tags) {
+  const abilityType = ability.type
+  let check = false
+  tags.forEach((thing) => {
+    if (thing == abilityType) {check = true}
+  })
+  return check;
+}
+
+async function editAbilityForm (abilityEle, place) {
+  const oldAbilityData = charData.abilities.list[place],
+  abilityName = oldAbilityData.name,
+  abilityType = oldAbilityData.type,
+  abilityDescription = oldAbilityData.description,
+  abilityRefLink = oldAbilityData.refLink,
+  editForm = await addAbilityForm()
+  const typeInput = editForm.querySelector('#abilityType'),
+  nameInput = editForm.querySelector('#abilityName'),
+  descriptionInput = editForm.querySelector('#description'),
+  refLinkInput = editForm.querySelector('#refrenceLink'),
+  addBtn = editForm.querySelector('#add'),
+  cancelBtn = editForm.querySelector('#cancel')
+
+  typeInput.setAttribute("value", `${abilityType}`)
+  nameInput.setAttribute("value", `${abilityName}`)
+  descriptionInput.setAttribute("value", `${abilityDescription}`)
+  if (abilityRefLink !== null) { refLinkInput.setAttribute("value", `${abilityRefLink}`) }
+  
+  addBtn.addEventListener('click', () => {addAbility(editForm, place)})
+  cancelBtn.addEventListener('click', () => {editForm.replaceWith(abilityEle)})
+
+  abilityEle.replaceWith(editForm)
 }
