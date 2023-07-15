@@ -26,7 +26,9 @@ for (const name of Object.keys(nets)) {
           if (!results[name]) {
               results[name] = [];
           }
+          console.log(net.address)
           results[name].push(net.address);
+          console.log(results[name])
       }
   }
 }
