@@ -144,6 +144,9 @@ input::placeholder {
 input:hover {
   background-color: var(--white);
 }
+input:focus {
+  background-color: var(--light);
+}
 p.err {
   color: var(--red);
   text-align: right;
@@ -235,7 +238,7 @@ div.character-options {
 #new-character {
   font-size: 1rem;
 }
-.sheet p {
+.sheet p, .ase-wrapper p {
   font-size: 1.25rem;
 }
 .sheet :is(input) {
@@ -378,6 +381,84 @@ div.character-options {
   border-top-right-radius: 1.6rem;
   height: calc(80vh - 55px);
 }
-.ase-wrapper div{
+.ase-wrapper > div{
   display: none;
+  height: inherit;
+  overflow-y: auto;
+}
+.ase-wrapper button {
+  font-size: 1rem;
+}
+.tags {
+  color: var(--green);
+  margin-bottom: 1rem;
+}
+.tag-header {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.tag-list {
+  display: inline-flex;
+  gap: 0.5rem;
+  color: var(--mid);
+}
+.tag-list p {
+  border-color: var(--mid);
+  border-style: solid;
+  padding: 0.25rem;
+  border-radius: 1.6rem;
+  font-weight: 900;
+}
+.tag-list p:hover {
+  background-color: var(--mid);
+  color: var(--light);
+}
+.form {
+  background-color: var(--dark);
+  margin-block: 0.5rem;
+  padding: 1rem;
+  border-radius: 1.6rem;
+}
+.form ul{
+  width: auto;
+}
+.form .explainer {
+  color: var(--light);
+  margin-top: 0.25rem;
+}
+.form textarea {
+  background-color: var(--light);
+  font-size: 1rem;
+  font-family: var(--mono);
+  color: var(--green);
+  width: 90%;
+  height: 6rem;
+  border: none;
+}
+.form textarea::placeholder {
+  color: var(--dark);
+}
+.form textarea:hover {
+  background-color: var(--white);
+}
+.form textarea:focus {
+  background-color: var(--light);
+  outline: none;
+  border: none;
+}
+.form input {
+  color: var(--green);
+}
+.ability {
+  padding-block: 0.5rem;
+}
+.ability p {
+  margin-block: 0.25rem;
+  margin-left: 1rem;
+}
+.ability .group-header {
+  margin-left: 0;
+}
+.list {
+  overflow-y: auto
 }

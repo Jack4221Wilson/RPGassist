@@ -24,11 +24,9 @@ for (const name of Object.keys(nets)) {
       const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
       if (net.family === familyV4Value && !net.internal) {
           if (!results[name]) {
-              results[name] = [];
+              results.name = [];
           }
-          console.log(net.address)
-          results[name].push(net.address);
-          console.log(results[name])
+          results.name.push(net.address);
       }
   }
 }
@@ -164,6 +162,7 @@ app.get('/character/blank', (req, res, next) => {
     }
   })
 })
+// Sends the Ability, Spell, and Equipment area of the sheet
 app.get('/character/blankASE', (req, res, next) => {
   res.sendFile(path2site + '/pages/elements/ase.html', (err) => {
     if (err) {
@@ -238,6 +237,14 @@ app.get('/character/delete/:id', async (req, res) => {
   }
   res.json(response)
 })
+//sends forms to a user's client
+app.get('/character/form/:type', (req, res, next) => {
+  res.sendFile(path2site + `/pages/elements/${req.params.type}`, (err) => {
+    if (err) {
+      next(err)
+    }
+  })
+})
 
 app.use(express.urlencoded({extended: true}))
 app.get('/forms/addingAbility', (req, res) => {
@@ -270,6 +277,6 @@ app.get('/forms/addingAbility', (req, res) => {
 app.listen(
   port,
   () => {
-    console.log(`Dance floor is at http://${results.en0[0]}:${port}`)
+    console.log(`Dance floor is at http://${results.name}:${port}`)
   }
 )
